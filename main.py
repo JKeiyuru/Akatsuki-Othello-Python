@@ -43,3 +43,27 @@ class OthelloGame:
         black_count = sum(row.count('B') for row in self.board)
         white_count = sum(row.count('W') for row in self.board)
         return black_count, white_count
+
+   
+    def game_review(self, game):
+        print("\n--- Game Review ---")
+        black_moves = [m for m in game.move_history if m[2] == 'B']
+        white_moves = [m for m in game.move_history if m[2] == 'W']
+
+    print("Black's Moves:")
+    for i, (row, col, _) in enumerate(black_moves, 1):
+        print(f"Move {i}: ({row}, {col})")
+    
+    print("\nWhite's Moves:")
+    for i, (row, col, _) in enumerate(white_moves, 1):
+        print(f"Move {i}: ({row}, {col})")
+
+    black_count, white_count = game.count_pieces()
+    print(f"\nFinal Score - Black: {black_count}, White: {white_count}")
+    
+    if black_count > white_count:
+        print("Black wins!")
+    elif white_count > black_count:
+        print("White wins!")
+    else:
+        print("It's a draw!")
