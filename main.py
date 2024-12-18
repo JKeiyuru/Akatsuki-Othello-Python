@@ -67,3 +67,49 @@ class OthelloGame:
         print("White wins!")
     else:
         print("It's a draw!")
+
+
+
+def main():
+    print("Welcome to Othello!")
+    mode = input("Choose mode (1: Player vs Player, 2: Player vs AI): ")
+
+    game = OthelloGame()
+    game.print_board()
+
+    while not game.is_game_over():
+        valid_moves = game.get_valid_moves(game.current_player)
+        
+        if not valid_moves:
+            print(f"No valid moves for {game.current_player}. Skipping turn.")
+            game.switch_player()
+            continue
+        
+        if mode == '1' or (mode == '2' and game.current_player == 'B'):
+            # Human player
+            print(f"Valid moves for {game.current_player}: {valid_moves}")
+            while True:
+                try:
+                    row = int(input("Enter row (0-7): "))
+                    col = int(input("Enter column (0-7): "))
+                    if (row, col) in valid_moves:
+                        game.make_move(row, col, game.current_player)
+                        break
+                    else:
+                        print("Invalid move. Try again.")
+                except ValueError:
+                    print("Invalid input. Please enter numbers.")
+        else:
+            # AI player
+            print("AI is thinking...")
+            time.sleep(1)  # Simulate thinking time
+            ai_move = game.ai_move()
+            game.make_move(ai_move[0], ai_move[1], game.current_player)
+            print(f"AI placed piece at ({ai_move[0]}, {ai_move[1]})")
+    
+        game.print_board()
+        game.switch_player()
+    
+    game.game_review()
+    if name == "main":
+        main()
